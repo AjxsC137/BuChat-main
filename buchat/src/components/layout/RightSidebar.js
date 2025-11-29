@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { TrendingUp, Users, UserPlus, Info, ArrowRight } from 'lucide-react';
+import { 
+  TrendingUp, 
+  Users, 
+  UserPlus, 
+  Info, 
+  Menu, 
+  ChevronDown, 
+  ChevronRight,
+  Shield, // For Premium icon
+  X
+} from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { userService } from '../../services/userService';
-import Button from '../common/Button';
 import './RightSidebar.css';
 
 const RightSidebar = () => {
@@ -11,6 +20,14 @@ const RightSidebar = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
   
+  // UI States for collapsible sections
+  const [isExpanded, setIsExpanded] = useState(true);
+  const [expandedSections, setExpandedSections] = useState({
+    trending: true,
+    suggestions: true,
+    premium: true
+  });
+
   const trendingGroups = [
     { name: 'Technology', members: '2.5M', icon: '💻', id: 'tech' },
     { name: 'Gaming', members: '1.8M', icon: '🎮', id: 'gaming' },
@@ -35,113 +52,158 @@ const RightSidebar = () => {
     }
   };
 
-  return (
-    <aside className="right-sidebar">
-      
-      {/* --- Trending Groups Widget --- */}
-      <div className="glass-panel sidebar-widget">
-        <div className="widget-header">
-          <div className="icon-badge orange">
-            <TrendingUp size={18} />
-          </div>
-          <h3>Trending Tribes</h3>
-        </div>
-        
-        <div className="widget-content">
-          {trendingGroups.map((group) => (
-            <Link key={group.id} to={`/g/${group.id}`} className="group-row">
-              <div className="group-circle-icon">
-                {group.icon}
-              </div>
-              <div className="group-info">
-                <span className="group-name">g/{group.name}</span>
-                <span className="group-meta">
-                  <Users size={12} /> {group.members}
-                </span>
-              </div>
-              <div className="arrow-hint">
-                <ArrowRight size={14} />
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
+  const toggleSection = (section) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
 
-      {/* --- User Suggestions Widget --- */}
-      {user && (
-        <div className="glass-panel sidebar-widget">
-          <div className="widget-header">
-            <div className="icon-badge blue">
-              <UserPlus size={18} />
-            </div>
-            <h3>People to Follow</h3>
-          </div>
-          
-          <div className="widget-content">
-            {loadingSuggestions ? (
-              <div className="widget-loading">
-                <div className="spinner-ring"></div>
-              </div>
-            ) : suggestions.length > 0 ? (
-              suggestions.map((suggestion) => (
-                <div key={suggestion.userId} className="suggestion-row">
-                  <Link to={`/u/${suggestion.username}`} className="suggestion-link">
-                    <div className="suggestion-avatar-wrapper">
-                      {suggestion.avatar ? (
-                        <img 
-                          src={suggestion.avatar} 
-                          alt={suggestion.username} 
-                          className="circle-avatar"
-                        />
-                      ) : (
-                        <div className="circle-avatar placeholder">
-                          {(suggestion.displayName || suggestion.username).charAt(0).toUpperCase()}
-                        </div>
-                      )}
+  return (
+    <aside className="app-right-rail" aria-label="Secondary navigation">
+      <div 
+        id="flex-right-nav-container" 
+        className={isExpanded ? 'expanded' : 'collapsed'} 
+        data-state={isExpanded ? 'expanded' : 'collapsed'} 
+        aria-expanded={isExpanded}
+      >
+        
+        {/* Toggle Button (Optional, can remove if you want it always open) */}
+        <div id="flex-nav-buttons">
+          <button 
+            type="button" 
+            className="sidebar-toggle-btn" 
+            aria-label={isExpanded ? "Collapse sidebar" : "Expand sidebar"}
+            onClick={() => setIsExpanded(!isExpanded)}
+            title="Toggle Sidebar"
+          >
+            {isExpanded ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+
+        <div id="flex-right-nav-contents">
+          <div className="contents" id="right-nav-persistent-container">
+            <nav className="sidebar-nav" aria-label="Right sidebar navigation">
+              
+              {/* --- Section: Trending Tribes --- */}
+              <section className="nav-section">
+                <button 
+                  type="button" 
+                  className="nav-section-header" 
+                  aria-expanded={expandedSections.trending} 
+                  onClick={() => toggleSection('trending')}
+                >
+                  <span className="section-title">TRENDING TRIBES</span>
+                  <span className="section-icon">
+                    {expandedSections.trending ? <ChevronDown size={16}/> : <ChevronRight size={16}/>}
+                  </span>
+                </button>
+
+                {expandedSections.trending && (
+                  <div className="nav-section-content">
+                    <ul className="nav-list">
+                      {trendingGroups.map((group) => (
+                        <li key={group.id}>
+                          <Link to={`/g/${group.id}`} className="nav-item">
+                            <span className="nav-icon text-emoji">{group.icon}</span>
+                            <div className="nav-label-container">
+                              <span className="nav-label">{group.name}</span>
+                              <span className="nav-meta-sub">{group.members} members</span>
+                            </div>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </section>
+
+              <hr className="nav-divider" />
+
+              {/* --- Section: People to Follow --- */}
+              {user && (
+                <section className="nav-section">
+                  <button 
+                    type="button" 
+                    className="nav-section-header" 
+                    aria-expanded={expandedSections.suggestions} 
+                    onClick={() => toggleSection('suggestions')}
+                  >
+                    <span className="section-title">SUGGESTIONS</span>
+                    <span className="section-icon">
+                      {expandedSections.suggestions ? <ChevronDown size={16}/> : <ChevronRight size={16}/>}
+                    </span>
+                  </button>
+
+                  {expandedSections.suggestions && (
+                    <div className="nav-section-content">
+                      <ul className="nav-list">
+                        {loadingSuggestions ? (
+                          <li className="nav-item-loading">Loading...</li>
+                        ) : suggestions.length > 0 ? (
+                          suggestions.map((suggestion) => (
+                            <li key={suggestion.userId}>
+                              <div className="nav-item user-item">
+                                <Link to={`/u/${suggestion.username}`} className="nav-link-wrapper">
+                                  <span className="nav-icon">
+                                    {suggestion.avatar ? (
+                                      <img src={suggestion.avatar} alt="" className="nav-avatar-img" />
+                                    ) : (
+                                      <div className="nav-avatar-placeholder">
+                                        {(suggestion.displayName || suggestion.username).charAt(0).toUpperCase()}
+                                      </div>
+                                    )}
+                                  </span>
+                                  <div className="nav-label-container">
+                                    <span className="nav-label">
+                                      {suggestion.displayName || suggestion.username}
+                                    </span>
+                                    <span className="nav-meta-sub">@{suggestion.username}</span>
+                                  </div>
+                                </Link>
+                                <button className="mini-follow-btn" title="Follow">
+                                  <UserPlus size={16} />
+                                </button>
+                              </div>
+                            </li>
+                          ))
+                        ) : (
+                          <li className="nav-item-empty">No new suggestions</li>
+                        )}
+                      </ul>
                     </div>
-                    
-                    <div className="suggestion-info">
-                      <span className="suggestion-name">
-                        {suggestion.displayName || suggestion.username}
-                      </span>
-                      <span className="suggestion-handle">@{suggestion.username}</span>
+                  )}
+                </section>
+              )}
+
+              <hr className="nav-divider" />
+
+              {/* --- Section: Premium --- */}
+              <ul className="nav-list nav-list-primary">
+                <li>
+                  <Link to="/premium" className="nav-item premium-item">
+                    <span className="nav-icon highlight-purple">
+                      <Shield size={20} />
+                    </span>
+                    <div className="nav-label-container">
+                      <span className="nav-label highlight-purple">BuChat Premium</span>
+                      <span className="nav-meta-sub">Unlock badges & themes</span>
                     </div>
                   </Link>
-                  
-                  <button className="follow-icon-btn" title="Follow">
-                    <UserPlus size={16} />
-                  </button>
-                </div>
-              ))
-            ) : (
-              <div className="widget-empty">
-                <p>No new suggestions.</p>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+                </li>
+              </ul>
 
-      {/* --- About / Footer Widget --- */}
-      <div className="glass-panel sidebar-widget mini-footer-card">
-        <div className="widget-header">
-          <div className="icon-badge purple">
-            <Info size={18} />
+            </nav>
+
+            {/* --- Footer --- */}
+            <div className="sidebar-footer" role="contentinfo">
+              <div className="footer-links-row">
+                 <Link to="/terms">Terms</Link> • <Link to="/privacy">Privacy</Link> • <Link to="/help">Help</Link>
+              </div>
+              <p className="footer-text">BuChat © 2025</p>
+            </div>
+
           </div>
-          <h3>BuChat Premium</h3>
-        </div>
-        <div className="widget-content">
-          <p className="about-text">
-            Unlock exclusive badges, custom themes, and support the community.
-          </p>
-          <Button variant="primary" fullWidth size="small" className="premium-btn">
-            Try Premium
-          </Button>
-          
-          <div className="footer-links-row">
-            <a href="/terms">Terms</a> • <a href="/privacy">Privacy</a> • <a href="/help">Help</a>
-          </div>
-          <div className="copyright">© 2025 BuChat Inc.</div>
         </div>
       </div>
     </aside>

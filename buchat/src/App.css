@@ -67,11 +67,19 @@
   display: none;
 }
 
+
 @media (min-width: 1024px) {
   .app-left-rail {
     display: block;
-    grid-column: 1;
-    position: relative;
+    grid-column: 1; /* Aligns logically, though 'fixed' ignores this */
+    position: fixed;
+    top: var(--shreddit-header-height, 56px); /* Starts right under the header */
+    left: 0;
+    width: var(--sidebar-width, 270px);
+    height: calc(100vh - var(--shreddit-header-height, 56px));
+    overflow-y: auto;
+    z-index: 50;
+    border-right: 1px solid var(--border-color, #e5e7eb); /* Optional visual separator */
   }
 }
 
