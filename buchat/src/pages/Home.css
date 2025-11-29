@@ -16,77 +16,63 @@
   
   --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
   --accent-color: #4f46e5;
+  --border-accent-hover: rgba(99, 102, 241, 0.6);
   
   /* High Contrast Pill Colors (Default Dark) */
   --pill-text-inactive: #94a3b8;
   --pill-text-active: #0f172a; /* Dark text on white pill */
   --pill-active-bg: #ffffff;
   --pill-active-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+
+  /* DEFAULT DARK THEME BLOBS (Purple/Indigo) */
+  --blob-color-1: rgba(99, 102, 241, 0.25);
+  --blob-color-2: rgba(168, 85, 247, 0.25);
 }
 
-/* ===== LIGHT THEME OVERRIDES ===== */
+/* ===== FINAL SELECTION: NORDIC SLATE ===== */
 [data-theme='light'] {
-  --page-bg: #f8fafc;
-  --glass-bg: rgba(255, 255, 255, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.6);
-  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  /* Background: #EAEFEF (Premium Off-White/Grey) */
+  --page-bg: #EAEFEF;
   
-  --text-main: #1f2937;
-  --text-muted: #6b7280;
+  /* Cards: White with high opacity for crisp contrast */
+  --glass-bg: rgba(255, 255, 255, 0.9);
   
-  --surface-hover: #f3f4f6;
-  --border-subtle: rgba(0, 0, 0, 0.05);
-  --ring-gap-color: #f8fafc;
-  --pill-bg: rgba(255, 255, 255, 0.8);
-  --skeleton-bg: rgba(255, 255, 255, 0.4);
+  /* Border: #B8CFCE (Pale Teal) - Subtle but distinct edge */
+  --glass-border: #B8CFCE;
   
-  /* High Contrast Pill Colors (Light Mode) */
-  --pill-text-inactive: #6b7280;
-  --pill-text-active: #ffffff; /* White text on dark pill */
-  --pill-active-bg: #1f2937;
-  --pill-active-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  /* Shadow: #333446 at low opacity for depth */
+  --glass-shadow: 0 4px 20px -2px rgba(51, 52, 70, 0.1);
+  
+  /* Typography */
+  --text-main: #333446; /* Deep Nordic Slate - High legibility */
+  --text-muted: #7F8CAA; /* Cool Grey-Blue */
+  
+  /* Interactions */
+  --border-accent-hover: rgba(127, 140, 170, 0.6);
+  --surface-hover: rgba(184, 207, 206, 0.25); /* #B8CFCE at low opacity */
+  --border-subtle: rgba(127, 140, 170, 0.15);
+  --ring-gap-color: #EAEFEF;
+  
+  --pill-bg: #ffffff;
+  --skeleton-bg: rgba(127, 140, 170, 0.2);
+  
+  /* Accent: Professional Gradient from Slate Blue to Dark Slate */
+  --primary-gradient: linear-gradient(135deg, #7F8CAA 0%, #333446 100%);
+  
+  /* Accent Color: #333446 */
+  --accent-color: #333446;
+
+  /* Pills/Buttons Config */
+  --pill-text-inactive: #7F8CAA;
+  --pill-text-active: #EAEFEF; /* Light text on active button */
+  --pill-active-bg: #333446;   /* Dark active background */
+  --pill-active-shadow: 0 4px 12px rgba(51, 52, 70, 0.25);
+
+  /* NORDIC THEME BLOBS (Teal/Slate) */
+  --blob-color-1: rgba(184, 207, 206, 0.6); /* Pale Teal */
+  --blob-color-2: rgba(127, 140, 170, 0.4); /* Slate Blue */
 }
 
-/* ===== Ambient Background ===== */
-.home-page {
-  min-height: 100vh;
-  width: 100%;
-  background: var(--page-bg);
-  position: relative;
-  overflow-x: hidden;
-  transition: background 0.3s ease;
-}
-
-.ambient-blob {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(80px);
-  z-index: 0;
-  opacity: 0.5;
-  animation: floatBlob 20s infinite alternate;
-  pointer-events: none;
-}
-
-.blob-1 {
-  top: -10%;
-  left: -10%;
-  width: 500px;
-  height: 500px;
-  background: rgba(99, 102, 241, 0.25);
-}
-
-.blob-2 {
-  bottom: 10%;
-  right: -5%;
-  width: 400px;
-  height: 400px;
-  background: rgba(168, 85, 247, 0.25);
-}
-
-@keyframes floatBlob {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(30px, 50px) scale(1.1); }
-}
 
 /* ===== Layout ===== */
 .home-container {
@@ -94,7 +80,7 @@
   z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
-  /* UPDATED: Reduced top padding to remove unused space */
+  /* Preserved your padding exactly as requested */
   padding: -2rem 1.5rem 1.5rem 1.5rem; 
   display: grid;
   grid-template-columns: 1fr;
@@ -285,7 +271,6 @@
   flex-direction: column;
   gap: 1.5rem;
   position: sticky;
-  /* UPDATED: Reduced top offset to tighten gap with navbar */
   top: 1px; 
   align-self: flex-start;
   max-height: calc(100vh - 80px); /* Adjusted max-height accordingly */
