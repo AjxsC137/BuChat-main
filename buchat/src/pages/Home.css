@@ -94,7 +94,8 @@
   z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1.5rem;
+  /* UPDATED: Reduced top padding to remove unused space */
+  padding: -2rem 1.5rem 1.5rem 1.5rem; 
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
@@ -116,58 +117,6 @@
   border-radius: 24px;
   transition: background 0.3s ease, border-color 0.3s ease;
 }
-
-/* ===== Welcome Header ===== */
-.welcome-glass-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 1.5rem;
-  padding: 0 0.5rem;
-}
-
-.welcome-text h1 {
-  font-size: 1.75rem;
-  font-weight: 800;
-  color: var(--text-main);
-  letter-spacing: -0.03em;
-  margin: 0;
-  background: linear-gradient(to right, var(--text-main), var(--text-muted));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.welcome-text p {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  margin: 0.25rem 0 0 0;
-}
-
-.wave { display: inline-block; animation: wave 2.5s infinite; transform-origin: 70% 70%; }
-@keyframes wave { 0% { transform: rotate(0deg); } 10% { transform: rotate(14deg); } 20% { transform: rotate(-8deg); } 30% { transform: rotate(14deg); } 40% { transform: rotate(-4deg); } 50% { transform: rotate(10deg); } 60% { transform: rotate(0deg); } 100% { transform: rotate(0deg); } }
-
-.search-pill {
-  display: none;
-  background: var(--glass-bg);
-  padding: 0.5rem 1rem;
-  border-radius: 999px;
-  align-items: center;
-  gap: 0.5rem;
-  box-shadow: var(--glass-shadow);
-  border: 1px solid var(--glass-border);
-  width: 200px;
-}
-
-@media (min-width: 768px) { .search-pill { display: flex; } }
-.search-pill input { 
-  border: none; 
-  outline: none; 
-  background: transparent; 
-  font-size: 0.9rem; 
-  width: 100%; 
-  color: var(--text-main); 
-}
-.search-pill svg { color: var(--text-muted); }
 
 /* ===== Stories Rail ===== */
 .stories-rail {
@@ -336,9 +285,10 @@
   flex-direction: column;
   gap: 1.5rem;
   position: sticky;
-  top: 80px;
+  /* UPDATED: Reduced top offset to tighten gap with navbar */
+  top: 1px; 
   align-self: flex-start;
-  max-height: calc(100vh - 100px);
+  max-height: calc(100vh - 80px); /* Adjusted max-height accordingly */
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--glass-border) transparent;
@@ -490,6 +440,4 @@
 @media (max-width: 768px) {
   .home-sidebar { display: none; }
   .home-container { padding: 1rem; gap: 1rem; }
-  .welcome-glass-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-  .search-pill { display: flex; width: 100%; }
 }

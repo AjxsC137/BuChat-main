@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { TrendingUp, UserPlus, Users, Sparkles, Zap, Plus, Search } from 'lucide-react';
+import { TrendingUp, UserPlus, Users, Sparkles, Zap, Plus } from 'lucide-react'; // Removed Search import
 import { useNavigate } from 'react-router-dom';
 import PostCard from '../components/posts/PostCard';
 import Button from '../components/common/Button';
 import { postService } from '../services/postService';
 import { groupService } from '../services/groupService';
 import { userService } from '../services/userService';
-import { socialService } from '../services/socialService';
 import { useAuth } from '../contexts/AuthContext';
 import './Home.css';
 
@@ -24,7 +23,7 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  // --- Logic remains same as your original code ---
+  // --- Logic remains same ---
   const fetchPosts = useCallback(async (resetPage = false) => {
     try {
       if (resetPage) {
@@ -78,28 +77,6 @@ const Home = () => {
 
   // --- Visual Components ---
 
-  const WelcomeHeader = () => {
-    const hours = new Date().getHours();
-    const greeting = hours < 12 ? 'Good Morning' : hours < 18 ? 'Good Afternoon' : 'Good Evening';
-    
-    return (
-      <motion.div 
-        className="welcome-glass-header"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <div className="welcome-text">
-          <h1>{greeting}, {user?.displayName?.split(' ')[0] || 'Friend'}! <span className="wave">👋</span></h1>
-          <p>Here's what's happening in your world.</p>
-        </div>
-        <div className="search-pill">
-            <Search size={18} />
-            <input type="text" placeholder="Explore BuChat..." />
-        </div>
-      </motion.div>
-    );
-  };
-
   const StoriesRail = () => (
     <div className="stories-rail">
        <motion.div className="story-item create-story" whileTap={{ scale: 0.95 }}>
@@ -109,7 +86,7 @@ const Home = () => {
           </div>
           <span>You</span>
        </motion.div>
-       {/* Mock Stories for visual appeal - replace with real data later */}
+       {/* Mock Stories */}
        {[1,2,3,4].map((i) => (
          <motion.div key={i} className="story-item" whileHover={{ y: -5 }} whileTap={{ scale: 0.95 }}>
             <div className="story-ring gradient-ring">
@@ -131,9 +108,8 @@ const Home = () => {
         
         {/* Main Feed Area */}
         <main className="home-main">
-          {isAuthenticated && <WelcomeHeader />}
           
-          {/* Stories Rail */}
+          {/* Stories Rail - Now at the top */}
           <StoriesRail />
 
           {/* Create Post Trigger */}
