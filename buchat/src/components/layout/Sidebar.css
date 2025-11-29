@@ -29,14 +29,25 @@
   height: 100%;
   width: 240px; /* Expanded Width */
   transition: width 0.3s ease;
+  overflow: hidden; /* CRITICAL: Prevents content from overflowing while shrinking */
 }
 
-/* Collapsed State */
+/* Collapsed State Container */
 #flex-left-nav-container.collapsed {
-  width: 72px; /* Collapsed Width */
+  width: 72px; /* Fixed width when collapsed */
 }
 
-/* Hide text labels when collapsed */
+/* --- COLLAPSED STATE CHILDREN FIXES --- */
+#flex-left-nav-container.collapsed #flex-nav-buttons {
+  justify-content: center;
+  padding: 12px 0; /* Remove side padding so it fits */
+}
+
+#flex-left-nav-container.collapsed .nav-item {
+  justify-content: center;
+  padding: 10px 0; /* Remove side padding so icons are centered */
+}
+
 #flex-left-nav-container.collapsed .nav-label-container,
 #flex-left-nav-container.collapsed .section-title,
 #flex-left-nav-container.collapsed .section-icon,
@@ -46,8 +57,13 @@
 }
 
 #flex-left-nav-container.collapsed .nav-section-header {
-  /* Hide section headers when collapsed to keep UI clean */
-  display: none; 
+  justify-content: center;
+  padding: 8px 0;
+}
+
+/* 5. Tighter padding for content area */
+#flex-left-nav-container.collapsed #flex-left-nav-contents {
+  padding: 8px 0; 
 }
 
 /* =========================================

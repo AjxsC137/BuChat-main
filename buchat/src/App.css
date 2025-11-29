@@ -75,7 +75,7 @@
     position: fixed;
     top: var(--shreddit-header-height, 56px); /* Starts right under the header */
     left: 0;
-    width: var(--sidebar-width, 270px);
+    width:fit-content;
     height: calc(100vh - var(--shreddit-header-height, 56px));
     overflow-y: auto;
     z-index: 50;
