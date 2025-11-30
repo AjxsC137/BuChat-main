@@ -227,24 +227,28 @@
   color: var(--text-main);
 }
 
-/* --- Glass Dropdown --- */
+/* --- Solid Dropdown (No Glass/Blur) --- */
 .glass-dropdown {
   position: absolute;
   top: calc(100% + 0.75rem);
   right: 0;
   width: 240px;
-  
-  /* Glass Card Styles */
-  background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  background: #ffffff; 
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
-  
   padding: 0.5rem;
   overflow: hidden;
   transform-origin: top right;
+  z-index: 1000;
+}
+
+[data-theme='dark'] .glass-dropdown {
+  background: #131925; 
+  border-color: #334155;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
 }
 
 .dropdown-header {
