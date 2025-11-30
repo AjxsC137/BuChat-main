@@ -9,7 +9,7 @@
 
 :root[data-theme="light"] {
   /* Modern Vibrant Light Theme */
-  --shreddit-header-height: 64px; /* Taller header */
+  --shreddit-header-height: 64px;
   --spacer-xs: 0.5rem;
   --spacer-sm: 0.75rem;
   --spacer-md: 1rem;
@@ -17,50 +17,50 @@
   --spacer-xl: 2rem;
   --spacer-2xl: 3rem;
   
-  /* Primary Colors - Vibrant Indigo/Violet */
-  --color-primary: #6366f1; /* Indigo 500 */
-  --color-primary-hover: #4f46e5; /* Indigo 600 */
-  --color-primary-background: #e0e7ff; /* Indigo 100 */
-  --color-primary-background-hover: #c7d2fe; /* Indigo 200 */
+  /* Primary Colors */
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-primary-background: #e0e7ff;
+  --color-primary-background-hover: #c7d2fe;
   
   /* Brand Colors */
-  --color-brand-orangered: #ff4500; /* Keep legacy brand color */
+  --color-brand-orangered: #ff4500;
   --color-brand-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   --color-upvote: #ff4500;
   --color-downvote: #7193ff;
   
   /* Neutral Colors */
   --color-neutral-background: #ffffff;
-  --color-neutral-background-weak: #f8fafc; /* Slate 50 */
-  --color-neutral-background-hover: #f1f5f9; /* Slate 100 */
-  --color-neutral-background-selected: #e2e8f0; /* Slate 200 */
+  --color-neutral-background-weak: #f8fafc;
+  --color-neutral-background-hover: #f1f5f9;
+  --color-neutral-background-selected: #e2e8f0;
   --color-neutral-background-container: #ffffff;
-  --color-neutral-content: #0f172a; /* Slate 900 */
-  --color-neutral-content-strong: #020617; /* Slate 950 */
-  --color-neutral-content-weak: #64748b; /* Slate 500 */
-  --color-neutral-border: #e2e8f0; /* Slate 200 */
-  --color-neutral-border-weak: #f1f5f9; /* Slate 100 */
+  --color-neutral-content: #0f172a;
+  --color-neutral-content-strong: #020617;
+  --color-neutral-content-weak: #64748b;
+  --color-neutral-border: #e2e8f0;
+  --color-neutral-border-weak: #f1f5f9;
   
   /* UI Colors */
-  --color-ui-canvas: #f8fafc; /* Slate 50 */
+  --color-ui-canvas: #f8fafc;
   --color-secondary-background: #ffffff;
   --color-secondary-background-hover: #f8fafc;
   --color-secondary-background-selected: #f1f5f9;
   
   /* Semantic Colors */
-  --color-success: #10b981; /* Emerald 500 */
-  --color-danger: #ef4444; /* Red 500 */
-  --color-warning: #f59e0b; /* Amber 500 */
-  --color-info: #3b82f6; /* Blue 500 */
+  --color-success: #10b981;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
   
-  /* Shadows - Softer & Colored */
+  /* Shadows */
   --elevation-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
   --elevation-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
   --elevation-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
   --elevation-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-  --shadow-glow: 0 0 15px rgba(99, 102, 241, 0.3); /* Glow effect */
+  --shadow-glow: 0 0 15px rgba(99, 102, 241, 0.3);
   
-  /* Border Radius - More rounded */
+  /* Border Radius */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -102,10 +102,10 @@
   --spacer-2xl: 3rem;
   
   /* Primary Colors */
-  --color-primary: #818cf8; /* Indigo 400 */
-  --color-primary-hover: #a5b4fc; /* Indigo 300 */
-  --color-primary-background: #312e81; /* Indigo 900 */
-  --color-primary-background-hover: #3730a3; /* Indigo 800 */
+  --color-primary: #818cf8;
+  --color-primary-hover: #a5b4fc;
+  --color-primary-background: #312e81;
+  --color-primary-background-hover: #3730a3;
   
   /* Brand Colors */
   --color-brand-orangered: #ff4500;
@@ -113,29 +113,36 @@
   --color-upvote: #ff4500;
   --color-downvote: #7193ff;
   
-  /* Neutral Colors - Pure Black Theme */
-  --color-neutral-background: #000000; /* Pure Black */
-  --color-neutral-background-weak: #0a0a0a; /* Near Black */
-  --color-neutral-background-hover: #1a1a1a; /* Dark Gray */
-  --color-neutral-background-selected: #2a2a2a; /* Medium Gray */
-  --color-neutral-background-container: #141414; /* Card Background */
-  --color-neutral-content: #f1f5f9; /* Slate 100 */
+  /* Neutral Colors - Black Base */
+  --color-neutral-background: #050505; /* Deepest black */
+  --color-neutral-background-weak: #0a0a0a;
+  --color-neutral-background-hover: #1a1a1a;
+  --color-neutral-background-selected: #2a2a2a;
+  --color-neutral-background-container: #141414;
+  --color-neutral-content: #f1f5f9;
   --color-neutral-content-strong: #ffffff;
-  --color-neutral-content-weak: #94a3b8; /* Slate 400 */
-  --color-neutral-border: #2a2a2a; /* Border */
-  --color-neutral-border-weak: #1a1a1a; /* Weak Border */
+  --color-neutral-content-weak: #94a3b8;
+  --color-neutral-border: #2a2a2a;
+  --color-neutral-border-weak: #1a1a1a;
   
-  /* UI Colors */
-  --color-ui-canvas: #000000; /* Pure Black Background */
-  --color-secondary-background: #141414; /* Card/Surface */
-  --color-secondary-background-hover: #1a1a1a; /* Hover State */
-  --color-secondary-background-selected: #2a2a2a; /* Selected State */
+  /* --- UI Colors (THE GRADIENT UPDATE) --- */
+  
+  /* 1. Define the Global Gradient here */
+  --background: linear-gradient(180deg, #020617 0%, #270e4e 100%);
+  
+  /* 2. Apply it to the Canvas variable */
+  --color-ui-canvas: var(--background);
+  
+  /* 3. Keep secondary surfaces solid/glass */
+  --color-secondary-background: #141414; 
+  --color-secondary-background-hover: #1a1a1a;
+  --color-secondary-background-selected: #2a2a2a;
   
   /* Semantic Colors */
-  --color-success: #34d399; /* Emerald 400 */
-  --color-danger: #f87171; /* Red 400 */
-  --color-warning: #fbbf24; /* Amber 400 */
-  --color-info: #60a5fa; /* Blue 400 */
+  --color-success: #34d399;
+  --color-danger: #f87171;
+  --color-warning: #fbbf24;
+  --color-info: #60a5fa;
   
   /* Shadows */
   --elevation-xs: 0 1px 2px rgba(0, 0, 0, 0.8);
@@ -159,7 +166,10 @@
   --danger: #f87171;
   --warning: #fbbf24;
   --info: #60a5fa;
-  --background: #000000;
+  
+  /* Make legacy background match new gradient */
+  /* --background: #000000; <--- REMOVED */
+  
   --surface: #141414;
   --surface-hover: #1a1a1a;
   --overlay: rgba(0, 0, 0, 0.85);

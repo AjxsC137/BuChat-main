@@ -1,7 +1,17 @@
 /* Root App Container */
 .App {
   min-height: 100vh;
+  
+  /* Apply the theme variable */
   background: var(--color-ui-canvas, var(--background, #F6F7F8));
+  
+  /* === GRADIENT FIX START === */
+  /* Ensures gradient doesn't scroll/tile. Stays fixed to viewport. */
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* === GRADIENT FIX END === */
+  
   display: flex;
   flex-direction: column;
 }
@@ -41,7 +51,10 @@
   width: 100%;
   min-height: calc(100vh - var(--shreddit-header-height, 56px));
   padding-top: var(--shreddit-header-height, 56px);
-  background: var(--color-ui-canvas, var(--background, #F6F7F8));
+  
+  /* We remove the background here because .App handles the global gradient now */
+  background: transparent; 
+  
   grid-template-columns: minmax(0, 1fr);
   --sidebar-width: 270px; /* Matched to Sidebar.css */
 }
@@ -67,19 +80,23 @@
   display: none;
 }
 
-
 @media (min-width: 1024px) {
   .app-left-rail {
     display: block;
-    grid-column: 1; /* Aligns logically, though 'fixed' ignores this */
+    grid-column: 1; 
+    
+    /* Fixed Sidebar Position */
     position: fixed;
-    top: var(--shreddit-header-height, 56px); /* Starts right under the header */
+    top: var(--shreddit-header-height, 56px); 
     left: 0;
-    width:fit-content;
+    
+    /* Auto Width to match collapsed/expanded state */
+    width: fit-content;
+    
     height: calc(100vh - var(--shreddit-header-height, 56px));
     overflow-y: auto;
     z-index: 50;
-    border-right: 1px solid var(--border-color, #e5e7eb); /* Optional visual separator */
+    border-right: 1px solid var(--border-color, #e5e7eb); 
   }
 }
 
@@ -123,7 +140,7 @@
   grid-column: 1;
   width: 100%;
   max-width: 100%;
-  background: var(--color-ui-canvas, var(--background, transparent));
+  background: transparent; /* Changed to transparent so gradient shows */
   animation: fadeIn 0.3s ease-out;
 }
 
@@ -154,12 +171,6 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
