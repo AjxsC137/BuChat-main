@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
-  ArrowUp, 
-  ArrowDown, 
+  Heart,
   MessageCircle, 
   Share2, 
   MoreHorizontal, 
@@ -13,18 +12,27 @@ import {
   ChevronRight,
   FileText,
   Download,
-  X
+  X,
+  Users,
+  Lock
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { postService } from '../../services/postService';
 import './PostCard.css';
 
-const PostCard = ({ post, onUpdate, onDelete, hideGroupName = false }) => {
+const PostCard = ({ post, onUpdate, onDelete, onUnsave, onSaveToggle, hideGroupName = false }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [voteStatus, setVoteStatus] = useState(post.userVoteStatus || 0); // -1, 0, 1
   const [voteCount, setVoteCount] = useState(post.score || 0);
   const [saved, setSaved] = useState(post.userSaved || false);
+
+
+
+  // Sync saved state when post prop changes
+  useEffect(() => {
+    setSaved(post.userSaved || false);
+  }, [post.userSaved, post.postId]);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
   const [showMenu, setShowMenu] = useState(false);
   const [showLightbox, setShowLightbox] = useState(false);
@@ -76,7 +84,7 @@ const PostCard = ({ post, onUpdate, onDelete, hideGroupName = false }) => {
 
     // Optimistic update
     setVoteStatus(newVote);
-    setVoteCount(prev => prev - oldVote + newVote);
+    setVoteCount(prev => Math.max(0, prev - oldVote + newVote));
 
     try {
       await postService.votePost(post.postId, user.userId, newVote);
@@ -103,8 +111,9 @@ const PostCard = ({ post, onUpdate, onDelete, hideGroupName = false }) => {
         await postService.savePost(post.postId, user.userId);
       } else {
         await postService.unsavePost(post.postId, user.userId);
+        if (onUnsave) onUnsave();
       }
-      if (onUpdate) onUpdate();
+      if (onSaveToggle) onSaveToggle(post.postId, newSaved);
     } catch (error) {
       console.error('Save failed:', error);
       setSaved(!newSaved);
@@ -475,11 +484,19 @@ const PostCard = ({ post, onUpdate, onDelete, hideGroupName = false }) => {
         </div>
 
         {/* Tags */}
-        {post.flair && (
-          <div className="post-tags">
-            <span className="tag flair-tag">{post.flair}</span>
-          </div>
-        )}
+        <div className="post-tags">
+          {post.flair && <span className="tag flair-tag">{post.flair}</span>}
+          {(post.audience === 'followers' || post.visibility === 'followers') && (
+            <span className="visibility-badge followers">
+              <Users size={12} /> Followers Only
+            </span>
+          )}
+          {(post.audience === 'members' || post.audience === 'group' || post.visibility === 'members') && post.group && post.group !== 'global' && (
+            <span className="visibility-badge">
+              <Lock size={12} /> Members Only
+            </span>
+          )}
+        </div>
 
         {/* Title & Content */}
         <div onClick={() => navigate(`/post/${post.postId}`)} style={{ cursor: 'pointer' }}>
@@ -531,24 +548,15 @@ const PostCard = ({ post, onUpdate, onDelete, hideGroupName = false }) => {
 
         {/* Action Row */}
         <div className="post-action-row">
-          {/* Vote Buttons */}
-          <div className="vote-buttons-inline">
-            <button 
-              className={`action-btn vote-btn upvote ${voteStatus === 1 ? 'active' : ''}`}
-              onClick={() => handleVote(1)}
-              title="Upvote"
-            >
-              <ArrowUp size={16} />
-            </button>
-            <span className="vote-count">{formatNumber(voteCount)}</span>
-            <button 
-              className={`action-btn vote-btn downvote ${voteStatus === -1 ? 'active' : ''}`}
-              onClick={() => handleVote(-1)}
-              title="Downvote"
-            >
-              <ArrowDown size={16} />
-            </button>
-          </div>
+          {/* Like Button */}
+          <button 
+            className={`action-btn like-btn ${voteStatus === 1 ? 'active' : ''}`}
+            onClick={() => handleVote(1)}
+            title="Like"
+          >
+            <Heart size={16} fill={voteStatus === 1 ? 'currentColor' : 'none'} />
+            <span>{formatNumber(voteCount)}</span>
+          </button>
           
           <Link to={`/post/${post.postId}`} className="action-btn comment-btn">
             <MessageCircle size={16} />
