@@ -231,7 +231,7 @@
 .glass-dropdown {
   position: absolute;
   top: calc(100% + 0.75rem);
-  right: 0;
+  right: -110px;
   width: 240px;
   background: #ffffff; 
   backdrop-filter: none;
